@@ -56,13 +56,14 @@ Then:
 Once readiness is confirmed, call `AskUserQuestion` with:
 
 - header: "Context source"
-- question: "This skill can ask you fresh for the PRD and Figma prototype link, or pull from what's already been shared earlier in this conversation. Which do you prefer?"
+- question: "This skill can ask you fresh for the PRD and Figma prototype link, pull from what's already been shared earlier in this conversation, or do both. Which do you prefer?"
 - multiSelect: false
 - options:
   - label: "Use conversation context where available (Recommended)", description: "If a PRD, brief, or Figma link already appeared earlier in this chat, I'll use that instead of asking again — and confirm with you what I found before proceeding"
+  - label: "Use conversation context, but let me add/confirm explicitly", description: "I'll check the conversation first and show you what I found, but I'll still ask you to paste or share the PRD and prototype link so there's one canonical source, not just an inference from earlier messages"
   - label: "I'll provide everything fresh", description: "Ask me for the PRD and Figma link explicitly, even if something similar was already mentioned in this conversation"
 
-Record the answer as `CONTEXT_MODE` (`conversation` or `fresh`) — it governs how Step 1c and Step 2 behave below.
+Record the answer as `CONTEXT_MODE` (`conversation`, `both`, or `fresh`) — it governs how Step 1c and Step 2 behave below.
 
 ---
 
@@ -126,6 +127,8 @@ Example: if the designer selected Comprehension and Workflows, send one message 
 
 If `CONTEXT_MODE` is `conversation`: first check whether an initiative name and a Figma URL already appear earlier in this conversation. If both are found, state what you found and ask the designer to confirm or correct it (e.g. "I see you shared [link] earlier for [initiative name] — should I use that, or has it changed?") instead of asking from scratch. If only one is found, ask only for the missing piece. If neither is found, fall through to the fresh-ask below.
 
+If `CONTEXT_MODE` is `both`: check the conversation the same way, and state what you found — but regardless of what you find, still ask the designer to explicitly paste/confirm the initiative name and Figma URL in the fresh-ask below, framed as "Here's what I found — please confirm or paste the current version so we have one clear source."
+
 If `CONTEXT_MODE` is `fresh`, or nothing usable was found above, ask in a separate message after Step 1b:
 
 > "Two more things before I move on:
@@ -139,6 +142,8 @@ Wait for both answers before moving to Step 2.
 ## STEP 2 — Collect PRD and context
 
 If `CONTEXT_MODE` is `conversation`: first check whether PRD content, an initiative brief, or equivalent problem-statement/requirements context already appears earlier in this conversation. If found, summarize what you found (problem statement, frontend must-haves, design options, new terminology) and ask the designer to confirm it's current and complete, rather than asking them to paste it again. If it's partial or outdated, ask only for what's missing or changed. If nothing usable is found, fall through to the fresh-ask below.
+
+If `CONTEXT_MODE` is `both`: check the conversation the same way and summarize what you found — but regardless of what you find, still ask the designer to paste the PRD/brief content in the fresh-ask below, framed as "Here's what I already picked up from this conversation — please paste the PRD (or confirm this covers it) so we're working from one canonical version."
 
 If `CONTEXT_MODE` is `fresh`, or nothing usable was found above, tell the designer:
 
