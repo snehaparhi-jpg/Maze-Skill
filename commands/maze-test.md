@@ -53,6 +53,17 @@ Then:
 - If Figma MCP is not connected, tell the designer they can either continue without it (script will use the pasted link as plain text) or pause to connect it first (via `/mcp` in an interactive session, or by asking their Claude Code admin to add the Figma MCP server).
 - If the designer indicates they need to set something up, pause here and do not proceed to Step 1 until they confirm they're ready.
 
+Once readiness is confirmed, call `AskUserQuestion` with:
+
+- header: "Context source"
+- question: "This skill can ask you fresh for the PRD and Figma prototype link, or pull from what's already been shared earlier in this conversation. Which do you prefer?"
+- multiSelect: false
+- options:
+  - label: "Use conversation context where available (Recommended)", description: "If a PRD, brief, or Figma link already appeared earlier in this chat, I'll use that instead of asking again — and confirm with you what I found before proceeding"
+  - label: "I'll provide everything fresh", description: "Ask me for the PRD and Figma link explicitly, even if something similar was already mentioned in this conversation"
+
+Record the answer as `CONTEXT_MODE` (`conversation` or `fresh`) — it governs how Step 1c and Step 2 behave below.
+
 ---
 
 ## STEP 1 — Collect test basics
@@ -113,7 +124,9 @@ Example: if the designer selected Comprehension and Workflows, send one message 
 
 ### Step 1c — Initiative name and prototype URL (text)
 
-In a separate message after Step 1b, ask:
+If `CONTEXT_MODE` is `conversation`: first check whether an initiative name and a Figma URL already appear earlier in this conversation. If both are found, state what you found and ask the designer to confirm or correct it (e.g. "I see you shared [link] earlier for [initiative name] — should I use that, or has it changed?") instead of asking from scratch. If only one is found, ask only for the missing piece. If neither is found, fall through to the fresh-ask below.
+
+If `CONTEXT_MODE` is `fresh`, or nothing usable was found above, ask in a separate message after Step 1b:
 
 > "Two more things before I move on:
 > 1. **Initiative name** — What is this feature or initiative called?
@@ -125,11 +138,13 @@ Wait for both answers before moving to Step 2.
 
 ## STEP 2 — Collect PRD and context
 
-Tell the designer:
+If `CONTEXT_MODE` is `conversation`: first check whether PRD content, an initiative brief, or equivalent problem-statement/requirements context already appears earlier in this conversation. If found, summarize what you found (problem statement, frontend must-haves, design options, new terminology) and ask the designer to confirm it's current and complete, rather than asking them to paste it again. If it's partial or outdated, ask only for what's missing or changed. If nothing usable is found, fall through to the fresh-ask below.
+
+If `CONTEXT_MODE` is `fresh`, or nothing usable was found above, tell the designer:
 
 > "Please paste your PRD content or upload your Word document. I will extract the problem statement, frontend must-haves, and any design options being tested. You can also add any extra context about what you specifically want to validate — things the PRD might not cover."
 
-Once the PRD is provided, extract and confirm with the designer:
+Once the PRD is provided (or confirmed from conversation context), extract and confirm with the designer:
 
 - **Problem statement** — Why is this being built? What user or business problem does it solve?
 - **Frontend must-haves** — What UI-visible requirements are in scope? Ignore all backend, API, data pipeline, or infrastructure items.
