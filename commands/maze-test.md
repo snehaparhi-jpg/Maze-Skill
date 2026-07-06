@@ -35,6 +35,26 @@ Use the domain selected in Step 1 to look up the correct values from this table.
 
 ---
 
+## STEP 0 — Prerequisites check
+
+Before collecting anything, send a single message confirming the designer has what's needed to run this skill end-to-end. Wait for their response before moving to Step 1.
+
+Tell the designer:
+
+> "Before we start, here's what you'll need:
+> 1. **PRD or initiative brief** — I'll ask you to paste this or upload a Word doc in a later step. Have it on hand.
+> 2. **Figma prototype link** — the frame(s) participants will interact with. I'll ask for this shortly.
+> 3. **Figma MCP connected in this session** — this lets me pull real frame context and screenshots from your prototype link instead of treating it as a plain URL. If it's not connected, I can still generate the script using the link as text, but I won't be able to reference actual frame content.
+>
+> Do you have these ready, or is there anything you need to set up first?"
+
+Then:
+- Check whether Figma MCP tools (tool names starting with `mcp__figma__`) are available in this session, or whether the system context shows the Figma MCP server as "still connecting" or absent. Report this status plainly to the designer as part of the same message — don't wait for them to ask.
+- If Figma MCP is not connected, tell the designer they can either continue without it (script will use the pasted link as plain text) or pause to connect it first (via `/mcp` in an interactive session, or by asking their Claude Code admin to add the Figma MCP server).
+- If the designer indicates they need to set something up, pause here and do not proceed to Step 1 until they confirm they're ready.
+
+---
+
 ## STEP 1 — Collect test basics
 
 Do not present Step 1 inputs as plain text. Use the `AskUserQuestion` tool for all selectable inputs. Follow the sequence below exactly.
