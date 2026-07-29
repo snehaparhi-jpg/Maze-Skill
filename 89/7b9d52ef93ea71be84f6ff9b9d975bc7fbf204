@@ -1,0 +1,19 @@
+commands/maze-test.md
+  s_afd6d1a352098d::t_3662c78a65dceb 3,5,7-20,34-38,40,42-55,102,104,106-107,110-154,165-176,179-180
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "897b9d52ef93ea71be84f6ff9b9d975bc7fbf204",
+  "prompts": {},
+  "sessions": {
+    "s_afd6d1a352098d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "471638fd-9b51-4ee2-bdf8-7eccd18daf49",
+        "model": "unknown"
+      },
+      "human_author": "Sneha Parhi <sneha.parhi@j7gl41q2t1.fritz.box>"
+    }
+  }
+}
