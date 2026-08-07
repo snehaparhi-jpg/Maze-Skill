@@ -62,22 +62,30 @@ Match the Pricing and Choice rows for specificity — each cell should read as o
 
 ## STEP 0 — Prerequisites check
 
-Before collecting anything, send a single message confirming the designer has what's needed to run this skill end-to-end. Wait for their response before moving to Step 1.
+Before collecting anything, send a single message confirming the designer has what's needed to run this skill end-to-end, then confirm readiness with a form — not a plain-text question. Wait for their answer before moving to Step 1.
 
 Tell the designer:
 
 > "Before we start, here's what you'll need:
 > 1. **PRD or initiative brief** — I'll ask you to paste this or upload a Word doc in a later step. Have it on hand.
 > 2. **Prototype** — this can be a Figma link, a Figma link with MCP connected, or a Claude prototype living inside this project. I'll ask which type you have in Step 1.
-> 3. **Prototype access (optional but better)** — if your prototype is in Figma and Figma MCP is connected, I can pull real frame context and screenshots. If your prototype is a Claude-built app inside this project, I can read the screen files directly from the working directory. Neither is required — you can always paste a link or type TBD.
->
-> Do you have these ready, or is there anything you need to set up first?"
+> 3. **Prototype access (optional but better)** — if your prototype is in Figma and Figma MCP is connected, I can pull real frame context and screenshots. If your prototype is a Claude-built app inside this project, I can read the screen files directly from the working directory. Neither is required — you can always paste a link or type TBD."
 
 Then:
 - Check whether Figma MCP tools (tool names starting with `mcp__figma__`) are available in this session. Report this status plainly to the designer as part of the same message.
 - Also check whether the current working directory appears to contain prototype source files (e.g. HTML, React/TSX components, routes, or a recognisable app structure). If so, note that a Claude prototype may be accessible in-session.
 - If Figma MCP is not connected and the designer is using Figma, tell them they can either continue without it (script will use the pasted link as plain text) or pause to connect it first (via `/mcp` in an interactive session, or by asking their Claude Code admin to add the Figma MCP server).
-- If the designer indicates they need to set something up, pause here and do not proceed to Step 1 until they confirm they're ready.
+
+Immediately after that message, call `AskUserQuestion` to confirm readiness:
+
+- header: "Readiness"
+- question: "Do you have the PRD and prototype ready, or is there anything you need to set up first?"
+- multiSelect: false
+- options:
+  - label: "Ready to go", description: "I have (or can provide) the PRD/brief and prototype — continue to Step 1"
+  - label: "Need to set something up first", description: "e.g. connect Figma MCP, prep the PRD, or get the prototype ready — pause here so I can do that"
+
+If the designer picks "Need to set something up first," or explains something via the auto-provided Other slot, pause here and do not proceed to Step 1 until they confirm they're ready.
 
 Once readiness is confirmed, call `AskUserQuestion` with:
 

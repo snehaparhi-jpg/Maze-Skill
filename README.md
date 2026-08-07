@@ -10,7 +10,7 @@ Built for the **Customer Product Line (CPL)** at Delivery Hero — covering the 
 
 Invoke `/maze-test` inside Claude Code and the skill walks you through:
 
-1. Selecting your domain (Pricing, Choice, or Seamless) and test focus (comprehension, workflows, confidence, A/B, gap finding)
+1. Selecting test type (B2B or B2C), domain, and test focus (comprehension, workflows, confidence, A/B, gap finding) — today, full script generation is only built for B2B unmoderated tests; every other combination pauses with a clear "not yet built" message
 2. Providing a PRD or initiative brief — paste it or pull from conversation context
 3. Specifying your prototype source — Figma (with or without MCP), a Claude prototype in the current project, or TBD
 4. Reviewing scope, estimating test time, and trimming if over 10 minutes
