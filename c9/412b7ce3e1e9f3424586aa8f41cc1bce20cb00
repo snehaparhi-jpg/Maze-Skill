@@ -1,0 +1,21 @@
+README.md
+  s_afd6d1a352098d::t_d8aa24c762ddf6 13
+commands/maze-test.md
+  s_afd6d1a352098d::t_f40579b4a56b14 65,72,78-88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "c9412b7ce3e1e9f3424586aa8f41cc1bce20cb00",
+  "prompts": {},
+  "sessions": {
+    "s_afd6d1a352098d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "471638fd-9b51-4ee2-bdf8-7eccd18daf49",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Sneha Parhi <sneha.parhi@j7gl41q2t1.fritz.box>"
+    }
+  }
+}
